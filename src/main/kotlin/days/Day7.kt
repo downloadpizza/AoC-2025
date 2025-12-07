@@ -48,26 +48,25 @@ object Day7 : Day {
             }
         }
 
-        val indices = mutableMapOf(tach[0].indexOf(Field.Start) to 1L)
+        val indices = Array(tach[0].size) { 0L }
+        indices[tach[0].indexOf(Field.Start)] = 1L
+        println(indices.joinToString(", "))
 
         tach.forEach { line ->
-            val immInd = HashMap(indices)
-            immInd.forEach { (index, count) ->
+            val immInd = indices.clone()
+            immInd.forEachIndexed { idx, count ->
                 if(count == 0L) {
-                    return@forEach
+                    return@forEachIndexed
                 }
-                when(line[index]) {
-                    Field.Splitter -> {
-                        indices[index - 1] = (indices[index - 1] ?: 0) + count
-                        indices[index] = (indices[index] ?: 0) - count
-                        indices[index + 1] = (indices[index + 1] ?: 0) + count
-
-                    }
-                    else -> {}
+                if (line[idx] == Field.Splitter) {
+                    indices[idx - 1] += count
+                    indices[idx] -= count
+                    indices[idx + 1] += count
                 }
             }
         }
 
-        return indices.values.sum().toString()
+        return indices.sum().toString()
     }
 }
+// 16937871060075
