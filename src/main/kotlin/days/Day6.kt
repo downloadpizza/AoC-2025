@@ -34,11 +34,6 @@ object Day6 : Day {
 
         val accOps = mutableListOf<Op>()
         ops.forEach { n ->
-            if(accOps.isEmpty()) {
-                accOps.add(Op(n, 0))
-                return@forEach
-            }
-
             if(n == ' ') {
                 accOps.last().len += 1
             } else {
@@ -47,6 +42,7 @@ object Day6 : Day {
         }
 
         accOps.last().len += 1
+
         var sum = 0L
         var offset = 0
         accOps.forEach { (op, len) ->
